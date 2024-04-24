@@ -30,8 +30,10 @@ public class UserService {
         if (!oldUser.isPresent()) {
             throw new NotFoundException("User not found with id " + userId);
         }
-        updatedUser.setId(userId);
-        return userRepository.save(mapper.toUserEntity(updatedUser));
+
+        User newUser=mapper.toUserEntity(updatedUser);
+        newUser.setId(userId);
+        return userRepository.save(newUser);
     }
 
     public List<User> getAllUsers() {
