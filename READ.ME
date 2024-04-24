@@ -1,2 +1,32 @@
 This is to cover User Managment Spring Application configured with H2 database.
 The configuration and credentials can be added/viewd in the file /UserManagement/src/main/resources/application.properties
+Server is configured to run over port 8081
+
+Accessing APIs:
+1-  Get All Users: 
+GET http://{YOur_SERVER}:8081/users
+Response: List of Users: [id, username]
+======================================================================
+2- Create a User: 
+POST http://{YOur_SERVER}:8081/user
+Request to create a user in json format: {
+    "username":"test",
+    "password":"test13456"
+}
+Response: Created User Object: {id, username}
+======================================================================
+3- Update Existing User: 
+PUT http://{YOur_SERVER}:8081/user/{userId}
+Request to update existing user by passing Id in the endpoint {userId} and below is request body in json format: {
+    "username":"test",
+    "password":"test19999"
+}
+Response: updated User Object: {id, username}
+======================================================================
+4- Delete a User:
+DELETE/http://{YOur_SERVER}:8081/user/{userId}
+Request for deleting existing user, by passing user id in the endpoint {userId}
+Response: No response
+======================================================================
+
+Note: Replace the parameters inside {} with your data
