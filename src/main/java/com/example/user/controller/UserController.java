@@ -1,7 +1,11 @@
 package com.example.user.controller;
 
+import com.example.mapper.UserMapper;
+import com.example.user.dto.UserDto;
 import com.example.user.entity.User;
+import com.example.user.model.UserModel;
 import com.example.user.service.UserService;
+import jakarta.validation.Valid;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +16,16 @@ import java.util.List;
 @RestController
 public class UserController {
     private final UserService userService;
+    private final UserMapper mapper;
 
-    @GetMapping( "/users")
-        public List<User> getAllUsers(){
-        return userService.getAllUsers();
+    @GetMapping("/users")
+    public List<UserModel> getAllUsers() {
+        return mapper.toListUserModel(userService.getAllUsers());
     }
+
     @PostMapping("/user")
-    public User createUser(@RequestBody User user) {
-        return userService.saveUser(user);
+    public UserModel createUser(@Valid @RequestBody UserDto user) {
+        return mapper.toUserModel(userService.saveUser(user));
     }
 
     @DeleteMapping("/user/{id}")
@@ -28,7 +34,7 @@ public class UserController {
     }
 
     @PutMapping("/user/{id}")
-    public User updateUser(@PathVariable("id") long userId, @RequestBody User user) throws NotFoundException {
-        return userService.updateUser(userId,user);
+    public UserModel updateUser(@PathVariable("id") long userId, @Valid @RequestBody UserDto user) throws NotFoundException {
+        return mapper.toUserModel(userService.updateUser(userId, user));
     }
 }

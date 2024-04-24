@@ -1,5 +1,7 @@
 package com.example.user.service;
 
+import com.example.mapper.UserMapper;
+import com.example.user.dto.UserDto;
 import com.example.user.entity.User;
 import com.example.user.repository.UserRepository;
 import javassist.NotFoundException;
@@ -13,22 +15,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final UserMapper mapper;
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public User saveUser(UserDto user) {
+        return userRepository.save(mapper.toUserEntity(user));
     }
 
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
 
-    public User updateUser(Long userId, User updatesdUser) throws NotFoundException {
+    public User updateUser(Long userId, UserDto updatedUser) throws NotFoundException {
         Optional<User> oldUser = userRepository.findById(userId);
         if (!oldUser.isPresent()) {
             throw new NotFoundException("User not found with id " + userId);
         }
-        updatesdUser.setId(userId);
-        return userRepository.save(updatesdUser);
+        updatedUser.setId(userId);
+        return userRepository.save(mapper.toUserEntity(updatedUser));
     }
 
     public List<User> getAllUsers() {
