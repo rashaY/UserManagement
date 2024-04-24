@@ -5,8 +5,13 @@ Server is configured to run over port 8081
 
 ======================================================================
 H2 Database configuration and Access:
-To access database you need to hit: http://{YOur_SERVER}:8081/h2-console/ 
-and provide credentials inside application.properties [sa, password]
+To access database you need to hit: http://{YOur_SERVER}:8081/h2-console/ , then provide the following details from  application.properties
+JDBC url: jdbc:h2:mem:testdb
+password: password
+
+After successful login, you need to run the script in  /UserManagement/src/main/resources/User_DDL, this will create Users table.
+
+
 
 ======================================================================
 
