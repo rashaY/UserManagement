@@ -1,48 +1,42 @@
 package com.example.security.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-
-@Configuration
-@EnableWebSecurity
 public class SecurityConfiguration {
+
+
+    ///////////////////////////////
+
 //    @Bean
-//    public SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
+//    public UserDetailsService userDetailsService(BCryptPasswordEncoder bCryptPasswordEncoder) {
+//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//        manager.createUser(User.withUsername("admin")
+//                .password(bCryptPasswordEncoder.encode("pass"))
+//                .roles("USER", "ADMIN")
+//                .build());
+//        return manager;
+//    }
 //
-//        http.authorizeExchange((exchange) -> exchange
-//                .pathMatchers("/h2-console", "/h2-console/*").permitAll()
-//                .anyExchange().denyAll());
+//    @Bean
+//    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailService)
+//            throws Exception {
+//        return http.getSharedObject(AuthenticationManagerBuilder.class)
+//                .userDetailsService(userDetailService)
+//                .passwordEncoder(bCryptPasswordEncoder)
+//               // .and()
+//         .and().build();
+//    }
+//
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http.csrf(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
+//                        authorizationManagerRequestMatcherRegistry
+//                                .requestMatchers("/h2-console").hasAnyRole("ADMIN")
+//                                .requestMatchers("/user/**").permitAll()
+//                                .requestMatchers("/users").permitAll()
+//                                .anyRequest().authenticated())
+//                .httpBasic(Customizer.withDefaults())
+//                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//
 //        return http.build();
 //    }
-@Bean
-public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
-    http.antMatcher("/admin/**")
-            .authorizeRequests().anyRequest().hasRole("ADMIN")
-            .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint())
-            .and().exceptionHandling().accessDeniedPage("/403");
-    return http.build();
-}
-    @Bean
-    public SecurityFilterChain springSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests((requests) -> requests
-                        .requestMatchers(new AntPathRequestMatcher("/h2-console")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/user")).permitAll()
-                )
-                .csrf((csrf) -> csrf
-                        .ignoringRequestMatchers(
-                                new AntPathRequestMatcher("/h2-console", "/h2-console/*")
-                        ).ignoringRequestMatchers(
-                                new AntPathRequestMatcher("/user")
-                        )
 
-                );
-        return http.build();
-    }
 }
